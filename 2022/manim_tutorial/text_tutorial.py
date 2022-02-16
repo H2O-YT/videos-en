@@ -67,24 +67,21 @@ class Example1(Scene):
             )
         )
 
+        width_brace = always_redraw(lambda: Brace(rec, direction=UP))
+        height_brace = always_redraw(lambda: Brace(rec, direction=RIGHT))
+
         width_text = always_redraw(
             lambda: Text(
                 "width = "+str(np.round(self.width.get_value(), decimals=2)),
                 font="Arial", weight=BOLD
-            )
+            ).next_to(width_brace, UP)
         )
         height_text = always_redraw(
             lambda: Text(
                 "height = "+str(np.round(self.height.get_value(), decimals=2)),
                 font="Arial", weight=BOLD
-            )
+            ).next_to(height_brace, UP)
         )
-
-        width_brace = always_redraw(lambda: Brace(rec, direction=UP))
-        height_brace = always_redraw(lambda: Brace(rec, direction=RIGHT))
-
-        width_text.next_to(width_brace, UP)
-        height_text.next_to(height_brace, RIGHT)
 
         braces = VGroup(width_brace, height_brace)
         texts = VGroup(width_text, height_text)
@@ -92,4 +89,3 @@ class Example1(Scene):
         self.play(DrawBorderThenFill(rec))
         self.play(Write(braces))
         self.play(Write(texts))
-        self.wait()
