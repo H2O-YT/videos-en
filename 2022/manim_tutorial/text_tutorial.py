@@ -1,6 +1,6 @@
-import csv
-from fix_yahoo_finance import download
 from manim import *
+import csv
+# Using csv for an example
 
 
 class Thumbnail(Scene):
@@ -113,8 +113,6 @@ class Example1(Scene):
 class Example2(Scene):
     # Vaccination in Chile. Data from
     # https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/country_data/Chile.csv
-    
-    import csv
 
     def construct(self):
 
