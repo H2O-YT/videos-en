@@ -1,3 +1,5 @@
+import csv
+from fix_yahoo_finance import download
 from manim import *
 
 
@@ -106,3 +108,68 @@ class Example1(Scene):
         self.play(
             self.width.animate.set_value(width), self.height.animate.set_value(height)
         )
+
+
+class Example2(Scene):
+    # Vaccination in Chile. Data from
+    # https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/country_data/Chile.csv
+    
+    import csv
+
+    def construct(self):
+
+        self.show_title()
+        self.initialize_ax()
+        self.show_graph()
+    
+    def show_title(self):
+
+        title = Tex("Vaccination in Chile")
+        title.scale(2)
+        title.to_edge(UP)
+
+        text = Tex("Chile population in 2020: 19.12 million")
+        text.next_to(title, DOWN)
+
+        self.add(title, text)
+
+    def initialize_ax(self):
+
+        self.ax = Axes(x_range=[0, 8, 1], y_range=[17660000, 17730000, 10000])
+        # range=[min, max, step]
+        self.ax.add_coordinates(range(1, 8), range(17670000, 17730000, 20000))
+        self.ax.scale(0.75)
+
+        x_axis_label = self.ax.get_x_axis_label(
+            Tex("Latest 7 days until 02/14/2022"),
+            edge=DOWN, direction=DOWN
+        )
+        y_axis_label = self.ax.get_y_axis_label(
+            Tex("Total people vaccinated in Chile").rotate(90*DEGREES),
+            edge=LEFT, direction=LEFT
+        )
+        axis_labels = VGroup(x_axis_label, y_axis_label)
+
+        self.play(Write(self.ax))
+        self.play(Write(axis_labels))
+    
+    def show_graph(self):
+
+        graph = self.ax.plot_line_graph(
+            x_values=self.load_data()[0], y_values=self.load_data()[1]
+        )
+        
+        self.play(Create(graph))
+
+    def load_data(self):
+
+        self.x_vals = list(range(1, 8))
+
+        with open('Chile.csv', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            self.y_vals = []
+            for row in reader:
+                self.y_vals.append(int(row['people_vaccinated']))
+        self.y_vals = self.y_vals[-7:]
+
+        return [self.x_vals, self.y_vals]

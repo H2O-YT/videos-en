@@ -1,0 +1,4 @@
+# This file is used internally by FFMPEG.
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example2/2724823860_4014171450_3699888597.mp4'
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example2/1164547788_347404253_1092460515.mp4'
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example2/1164547788_1138218888_4027308057.mp4'
