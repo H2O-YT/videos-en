@@ -60,6 +60,8 @@ class Example1(Scene):
         self.width = ValueTracker(4)
         self.height = ValueTracker(3)
 
+        # Since Python variables save the last value setting, we use always_redraw which is an update function.
+        
         rec = always_redraw(
             lambda: Rectangle(
                 height=self.height.get_value(), width=self.width.get_value()
