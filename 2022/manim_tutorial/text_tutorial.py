@@ -53,6 +53,7 @@ class Example1(Scene):
     def construct(self):
         
         self.initialize_stuff()
+        self.animate_dimensions()
 
     def initialize_stuff(self):
 
@@ -89,3 +90,17 @@ class Example1(Scene):
         self.play(DrawBorderThenFill(rec))
         self.play(Write(braces))
         self.play(Write(texts))
+
+    def animate_dimensions(self):
+
+        self.set_dimensions(0.3, 0.5)
+        self.set_dimensions(2, 1)
+        self.set_dimensions(4, 3)
+        self.set_dimensions(2, 2)
+        self.wait()
+
+    def set_dimensions(self, width, height):
+        
+        self.play(
+            self.width.animate.set_value(width), self.height.animate.set_value(height)
+        )
