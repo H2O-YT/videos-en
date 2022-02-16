@@ -81,7 +81,7 @@ class Example1(Scene):
             lambda: Text(
                 "height = "+str(np.round(self.height.get_value(), decimals=2)),
                 font="Arial", weight=BOLD
-            ).next_to(height_brace, UP)
+            ).next_to(height_brace, RIGHT)
         )
 
         braces = VGroup(width_brace, height_brace)
