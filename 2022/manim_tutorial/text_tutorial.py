@@ -1,6 +1,8 @@
 from manim import *
 import csv
-# Using csv for an example
+# Using csv for Example2
+from random import random, uniform
+# Using random for Example3
 
 
 class Thumbnail(Scene):
@@ -171,3 +173,84 @@ class Example2(Scene):
         self.y_vals = self.y_vals[-7:]
 
         return [self.x_vals, self.y_vals]
+
+
+class Example3(Scene):
+
+    def construct(self):
+        
+        self.initialize_stuff()
+        self.start_generating_random_points()
+    
+    def initialize_stuff(self):
+
+        title = Tex("Average distance between two\\\\points in the unit circle")
+        title.scale(2)
+        title.to_edge(UP)
+
+        c = Circle(radius=1)
+        self.points = []
+
+        self.fixed_point = Dot(RIGHT)
+        # RIGHT = np.array([1, 0])
+        # And (1, 0) belongs to the unit circle
+
+        rec = Rectangle(height=1, width=4).set_color(YELLOW).to_edge(DOWN)
+        line = Line(0.5*DOWN, 0.5*UP).set_color(YELLOW).move_to(rec).shift(LEFT)
+
+        def update_func():
+            if len(self.points) == 0:
+                object = Text("ERROR", font="Digital-7")
+            else:
+                object = Text(str(np.round(self.average_distance(), deicmals=3)), font="Digital-7")
+            return object.set_color(BLUE).next_to(line, RIGHT)
+
+        tex = MathTex("\\bar{d}").set_color(GREEN).next_to(line, LEFT)
+        text = Text("ERROR", font="Digital-7")
+        group = VGroup(tex, text)
+        rec = SurroundingRectangle(group)
+        
+        # This line will divide rec into two parts: the tex part and the text part
+
+        self.play(Write(title))
+        self.play(Create(c))
+        self.play(Create(self.fixed_point))
+        self.play(Write(group))
+        self.play(Create(rec), Create(line))
+        self.wait()
+
+    def start_generating_random_points(self):
+        
+        i = 0
+        while i < 100:
+            self.generate_random_point()
+            i += 1
+
+    def generate_random_point(self):
+
+        random_x = uniform(-1, 1)
+        random_number = random()
+
+        if random_number < 0.5:
+            random_sign = 1
+        else:
+            random_sign = -1
+        random_y = random_sign * np.sqrt(1 - random_x**2)
+        self.points.append(random_x*RIGHT+random_y*UP)
+
+        self.add(Line(self.fixed_point.get_center(), self.points[-1]), Dot(self.points[-1]))
+        self.bring_to_front(self.fixed_point)
+        # This just brings to front the mobject self.fixed_point
+        self.wait(0.1)
+    
+    def average_distance(self):
+
+        result = 0
+        for point in self.points:
+            result += (
+                np.sqrt(
+                    (self.fixed_point.get_center()[0]-point[0])**2 + (self.fixed_point.get_center()[1]-point[1])**2
+                )
+            )
+        result /= len(self.points)
+        return result
