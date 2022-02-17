@@ -253,3 +253,53 @@ class Example3(Scene):
             )
         result /= len(self.points)
         return result
+
+
+class Example4(Scene):
+
+    def construct(self):
+
+        self.initialize_stuff()
+    
+    def initialize_stuff(self):
+
+        ax = NumberPlane()
+        self.tracker = ValueTracker(1)
+
+        tex1 = MathTex("f", "(", "x", ",", "y", ")", "=", "x", "y")
+        tex1.set_color_by_tex("x", YELLOW)
+        tex1.set_color_by_tex("y", BLUE)
+        tex1.set_color_by_tex("f", GREEN)
+
+        slider_group = self.get_slider()
+        group = VGroup(tex1, slider_group).arrange(DOWN)
+        rec = SurroundingRectangle(group).set_fill(BLACK, opacity=1)
+
+        graph = always_redraw(lambda: ax.plot_implicit_curve(
+            lambda x,y: x*y - self.tracker, color=RED
+        ))
+
+        self.play(Write(ax))
+        self.play(DrawBorderThenFill(rec))
+        self.play(Write(group))
+        self.play(Create(graph))
+
+
+    def get_slider(self):
+        
+        tex2 = MathTex("f", "(", "x", ",", "y", ")")
+        tex2.set_color_by_tex("x", YELLOW)
+        tex2.set_color_by_tex("y", BLUE)
+        tex2.set_color_by_tex("f", GREEN)
+
+        line = NumberLine(x_range=[-10, 10, 4], length=4)
+        dot = always_redraw(
+            lambda: LabeledDot(DecimalNumber(self.tracker.get_value(), color=BLACK)).move_to(
+                line.n2p(self.tracker.get_value())
+            ).set_color(GREEN)
+        )
+        slider = VGroup(line, dot)
+
+        result = VGroup(tex2, slider).arrange(RIGHT)
+
+        return result
