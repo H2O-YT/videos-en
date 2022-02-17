@@ -184,7 +184,7 @@ class Example3(Scene):
     
     def initialize_stuff(self):
 
-        title = Tex("Average distance between two\\\\points in the unit circle")
+        title = Tex("Average distance between two\\\\points on the unit circle")
         title.scale(2)
         title.to_edge(UP)
 
