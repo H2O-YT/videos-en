@@ -196,33 +196,34 @@ class Example3(Scene):
         # And (1, 0) belongs to the unit circle
 
         rec = Rectangle(height=1, width=4).set_color(YELLOW).to_edge(DOWN)
-        line = Line(0.5*DOWN, 0.5*UP).set_color(YELLOW).move_to(rec).shift(LEFT)
-
-        def update_func():
-            if len(self.points) == 0:
-                object = Text("ERROR", font="Digital-7")
-            else:
-                object = Text(str(np.round(self.average_distance(), deicmals=3)), font="Digital-7")
-            return object.set_color(BLUE).next_to(line, RIGHT)
-
-        tex = MathTex("\\bar{d}").set_color(GREEN).next_to(line, LEFT)
-        text = Text("ERROR", font="Digital-7")
-        group = VGroup(tex, text)
-        rec = SurroundingRectangle(group)
-        
+        self.line = Line(0.5*DOWN, 0.5*UP).set_color(YELLOW).move_to(rec).shift(LEFT)
         # This line will divide rec into two parts: the tex part and the text part
 
+
+        tex = MathTex("\\bar{d}").set_color(GREEN).next_to(self.line, LEFT)
+        self.text = Text("ERROR", font="Digital-7")
+        group = VGroup(tex, self.text)
+        rec = SurroundingRectangle(group)
+        
         self.play(Write(title))
         self.play(Create(c))
         self.play(Create(self.fixed_point))
         self.play(Write(group))
-        self.play(Create(rec), Create(line))
+        self.play(Create(rec), Create(self.line))
         self.wait()
 
     def start_generating_random_points(self):
         
+        def update_func(m):
+            m.become(Text(str(np.round(self.average_distance(), decimals=3)), font="Digital-7"))
+            m.set_color(BLUE)
+            m.next_to(self.line, RIGHT)
+
         i = 0
         while i < 100:
+            if i == 0:
+                self.text.add_updater(update_func)
+                # Since Python saves the last value setting, we added updated_func as self.text's updater
             self.generate_random_point()
             i += 1
 
