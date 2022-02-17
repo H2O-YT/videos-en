@@ -194,14 +194,12 @@ class Example3(Scene):
         self.fixed_point = Dot(RIGHT)
         # RIGHT = np.array([1, 0])
         # And (1, 0) belongs to the unit circle
-
-        rec = Rectangle(height=1, width=4).set_color(YELLOW).to_edge(DOWN)
-        self.line = Line(0.5*DOWN, 0.5*UP).set_color(YELLOW).move_to(rec).shift(LEFT)
+        self.line = Line(0.5*DOWN, 0.5*UP).set_color(YELLOW).to_edge(DOWN).shift(LEFT)
         # This line will divide rec into two parts: the tex part and the text part
 
 
         tex = MathTex("\\bar{d}").set_color(GREEN).next_to(self.line, LEFT)
-        self.text = Text("ERROR", font="Digital-7")
+        self.text = Text("ERROR", font="Digital-7").next_to(self.line, RIGHT)
         group = VGroup(tex, self.text)
         rec = SurroundingRectangle(group)
         
@@ -209,7 +207,7 @@ class Example3(Scene):
         self.play(Create(c))
         self.play(Create(self.fixed_point))
         self.play(Write(group))
-        self.play(Create(rec), Create(self.line))
+        self.play(Create(self.line))
         self.wait()
 
     def start_generating_random_points(self):
