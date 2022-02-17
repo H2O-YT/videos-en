@@ -1,0 +1,5 @@
+file './media/videos/text_tutorial/1080p60/Beginning.mp4'
+file './media/videos/text_tutorial/1080p60/Example1.mp4'
+file './media/videos/text_tutorial/1080p60/Example2.mp4'
+file './media/videos/text_tutorial/1080p60/Example3.mp4'
+file './media/videos/text_tutorial/1080p60/Example4.mp4'
