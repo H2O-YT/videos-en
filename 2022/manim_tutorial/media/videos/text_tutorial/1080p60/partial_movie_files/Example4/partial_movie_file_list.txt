@@ -1,0 +1,11 @@
+# This file is used internally by FFMPEG.
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example4/2724823860_184600737_1577535401.mp4'
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example4/1164547788_3551520026_2700125628.mp4'
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example4/1164547788_605285320_1908633008.mp4'
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example4/1164547788_3288566653_2468813067.mp4'
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example4/1164547788_368860893_2598866334.mp4'
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example4/1164547788_3493041802_2627831934.mp4'
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example4/1164547788_2295558650_551047621.mp4'
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example4/1164547788_3493041802_3864462754.mp4'
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example4/1164547788_2470337386_3877195269.mp4'
+file 'file:/home/h2o-vm/Documents/videos-en/2022/manim_tutorial/media/videos/text_tutorial/1080p60/partial_movie_files/Example4/1164547788_3493041802_3715924340.mp4'

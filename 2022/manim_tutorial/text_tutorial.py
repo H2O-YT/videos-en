@@ -260,6 +260,7 @@ class Example4(Scene):
     def construct(self):
 
         self.initialize_stuff()
+        self.changing_function_value()
     
     def initialize_stuff(self):
 
@@ -272,17 +273,17 @@ class Example4(Scene):
         tex1.set_color_by_tex("f", GREEN)
 
         slider_group = self.get_slider()
-        group = VGroup(tex1, slider_group).arrange(DOWN)
+        group = VGroup(tex1, slider_group).arrange(DOWN).to_corner(UL)
         rec = SurroundingRectangle(group).set_fill(BLACK, opacity=1)
 
         graph = always_redraw(lambda: ax.plot_implicit_curve(
-            lambda x,y: x*y - self.tracker, color=RED
+            lambda x,y: x*y - self.tracker.get_value(), color=RED
         ))
 
         self.play(Write(ax))
+        self.play(Create(graph))
         self.play(DrawBorderThenFill(rec))
         self.play(Write(group))
-        self.play(Create(graph))
 
 
     def get_slider(self):
@@ -294,12 +295,22 @@ class Example4(Scene):
 
         line = NumberLine(x_range=[-10, 10, 4], length=4)
         dot = always_redraw(
-            lambda: LabeledDot(DecimalNumber(self.tracker.get_value(), color=BLACK)).move_to(
+            lambda: LabeledDot(DecimalNumber(self.tracker.get_value(), color=BLACK), color=GREEN).move_to(
                 line.n2p(self.tracker.get_value())
-            ).set_color(GREEN)
+            ).scale(0.4)
         )
         slider = VGroup(line, dot)
 
         result = VGroup(tex2, slider).arrange(RIGHT)
 
         return result
+    
+    def changing_function_value(self):
+
+        self.play(self.tracker.animate.set_value(8.0))
+        self.wait()
+        self.play(self.tracker.animate.set_value(0.2))
+        self.wait()
+        self.tracker.set_value(-1.0)
+        self.play(self.tracker.animate.set_value(-7.0))
+        self.wait()
