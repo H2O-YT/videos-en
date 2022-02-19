@@ -2,7 +2,8 @@ from manim import *
 
 
 class Countdown(Scene):
-
+    # self.setup method runs before self.construct. That will allow us to add our
+    # countdown to the scene without self.construct
     def setup(self):
         # To create a countdown, we need a text constantly updating.
         # We'll use an update function.
@@ -40,7 +41,7 @@ class Countdown(Scene):
         self.add(countdown)
     
     def construct(self):
-        
+
         banner = ManimBanner()
 
         self.play(banner.create())
