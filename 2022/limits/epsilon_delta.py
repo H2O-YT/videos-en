@@ -180,7 +180,7 @@ class TeachFunctionScene(Scene):
         colors = [YELLOW, BLUE]
         tex_groups = VGroup(x_group, y_group)
         tex_sets = VGroup(MathTex("A"), MathTex("B"))
-        for tex_group, color, tex_set in zip(colors, tex_groups, tex_sets):
+        for tex_group, color, tex_set in zip(tex_groups, colors, tex_sets):
             ellipse = Ellipse(width=tex_group[0].width+1.0, height=tex_group[0].height+1.0)
             ellipse.set_color(color)
             ellipse.surround(tex_group)
