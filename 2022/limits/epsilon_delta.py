@@ -105,9 +105,9 @@ class Thumbnail(EpsilonDeltaScene):
 
 class TeachFunctionsScene(Scene):
     
-    def setup_function_stuff(self, function, function_string, x_values, discontinuities):
+    def setup_function_stuff(self, function, function_strings, x_values, discontinuities):
         self.function = function
-        self.function_string = function_string
+        self.function_strings = function_strings
         self.x_values = x_values
         self.y_values = [function(x) for x in x_values]
         self.discontinuities = discontinuities
@@ -138,21 +138,31 @@ class TeachFunctionsScene(Scene):
         groups = VGroup(input_group, output_group).arrange(RIGHT)
 
         arrow = CurvedArrow(
-            *[group.get_top()+0.2*UP for group in groups]
+            *[group.get_top()+0.2*UP for group in groups], angle=-PI/4
         )
-        function_tex = MathTex(self.function_string)
+        function_tex = MathTex(self.function_strings[0])
         function_tex.set_color(GREEN)
         function_tex.next_to(arrow, UP)
         arrow_group = VGroup(arrow, function_tex)
 
-        all_groups = VGroup(*groups, arrow_group)
+        f_x = MathTex(
+            self.function_strings[0], "(", "x", ")", "=", *self.function_strings[1]
+        )
+        f_x.set_color_by_tex("x", YELLOW)
+        f_x.set_color_by_tex(self.function_strings[0], GREEN)
+        f_x.to_edge(DOWN)
+        all_groups = VGroup(*groups, arrow_group, f_x)
         
         for group in all_groups:
             self.play(Write(group))
-            self.wait(2)
+            self.wait()
 
 
 class FirstFunction(TeachFunctionsScene):
 
     def setup(self):
-        self.setup_function_stuff(lambda x: 2*x-1, "f", [-3/4, 0, 1/2, 2], None)
+        func = lambda x: 2*x-1
+        function_strings = ["f", ["2", "x", "-", "1"]]
+        x_values = [-3/4, 0, 1/2, 2]
+        discontinuities = None
+        self.setup_function_stuff(func, function_strings, x_values, discontinuities)
