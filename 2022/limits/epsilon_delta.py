@@ -188,16 +188,15 @@ class TeachFunctionScene(Scene):
             tex_set.next_to(ellipse, UP)
             tex_set.set_color(RED)
             tex_group[1].add(ellipse, tex_set)
-        
+
+        result.add(x_group, y_group)
+        result.arrange(RIGHT, buff=0.5)
+
         arrow = CurvedArrow(
             x_group[1][1].get_top()+0.2*UR,
             y_group[1][1].get_top()+0.2*UL,
             angle=-PI/4
         )
-
-        result.add(x_group, y_group)
-        result.arrange(RIGHT, buff=0.5)
-
         arrow_tex = MathTex(self.f_str).set_color(GREEN).next_to(arrow, UP)
         arrow_group.add(arrow, arrow_tex)
         result.add(arrow_group)
