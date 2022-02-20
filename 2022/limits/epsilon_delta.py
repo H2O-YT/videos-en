@@ -7,10 +7,20 @@ MY_GREEN = "#198C15"
 class Logo(VMobject):
 
     def __init__(self):
+
         super().__init__()
         circle = Circle().set_stroke(WHITE).set_fill(MY_GREEN, opacity=1)
         name = MathTex("\\mathrm{H_2O}")
         self.add(circle, name)
+
+
+class TexRainbow(Tex):
+
+    def __init__(self, *tex_strings, **kwargs):
+
+        super().__init__(*tex_strings, **kwargs)
+        self.set_color_by_gradient(RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE)
+
 
 class EpsilonDeltaScene(Scene):
     def get_delta_lines(self, x0, delta):
@@ -22,7 +32,7 @@ class EpsilonDeltaScene(Scene):
                 x_val*RIGHT+config.frame_height/2*DOWN,
                 x_val*RIGHT+config.frame_height/2*UP,
                 color=YELLOW
-            )
+            ).set_opacity(0.7)
             result.add(line)
         
         return result
@@ -36,7 +46,7 @@ class EpsilonDeltaScene(Scene):
                 y_val*UP+config.frame_width/2*LEFT,
                 y_val*UP+config.frame_width/2*RIGHT,
                 color=YELLOW
-            )
+            ).set_opacity(0.7)
             result.add(line)
         
         return result
@@ -49,12 +59,12 @@ class EpsilonDeltaScene(Scene):
             x0*RIGHT+config.frame_height/2*DOWN,
             x0*RIGHT+config.frame_height/2*UP,
             color=YELLOW
-        )
+        ).set_opacity(0.7)
         line2 = DashedLine(
             l*UP+config.frame_width/2*LEFT,
             l*UP+config.frame_width/2*RIGHT,
             color=YELLOW
-        )
+        ).set_opacity(0.7)
         result.add(line1, line2)
 
         return result
@@ -91,3 +101,34 @@ class Thumbnail(EpsilonDeltaScene):
     
     def func(self, x):
         return (x**3 - 1)/(x - 1) - 4
+
+
+class TeachFunctionsScene(Scene):
+
+    def setup(self):
+        self.setup_function_stuff()
+    
+    def setup_function_stuff(self, function, x_values, discontinuities):
+        self.function = function
+        self.x_values = x_values
+        self.y_values = [function(x) for x in x_values]
+        self.discontinuities = discontinuities
+    
+    def construct(self):
+        input_group = self.get_group("x", self.x_values, YELLOW)
+        output_group = self.get_group("y", self.y_values, BLUE)
+
+    def get_group(self, var_string, var_values, color):
+
+        result = VGroup()
+
+        for var in var_values:
+            tex = MathTex(var_string, "=", var).set_color_by_tex(var_string, color)
+            result.add(tex)
+        
+        result.arrange(DOWN)
+        ellipse = Ellipse(width=result.width+2.0, height=result.height+2.0)
+        ellipse.set_color(color)
+        result.add(ellipse)
+        
+        return result
