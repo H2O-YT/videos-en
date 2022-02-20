@@ -201,8 +201,30 @@ class TeachFunctionScene(Scene):
         arrow_group.add(arrow, arrow_tex)
         result.add(arrow_group)
 
+        result.scale(0.8)
+
         return result
     
+    def construct(self):
+        self.show_function_mapping()
+    
+    def show_function_mapping(self):
+        in_out_group = self.get_input_output_group()
+        f_x = VGroup(*[self.get_function_steps_group(x) for x in [None, *self.x_vals]])
+        y_f_x = VGroup(*[self.get_y_tex(x) for x in [None, *self.x_vals]])
+        y_f_x.next_to(f_x, UP)
+
+        self.play(Write(y_f_x))
+        self.play(Write(f_x))
+        self.wait(2)
+        self.play(Write(in_out_group[0]))
+        self.wait(2)
+
+        for x_tex in in_out_group[0][0]:
+            self.play(Indicate(x_tex))
+            self.wait()
+            
+
 
 class Function1(TeachFunctionScene):
 
@@ -215,12 +237,3 @@ class Function1(TeachFunctionScene):
     
     def func(self, x):
         return 2*x-1
-
-    def construct(self):
-
-        group = self.get_input_output_group()
-        f_tex = self.get_function_steps_group()
-        y_tex = self.get_y_tex()
-        y_tex.next_to(f_tex, UP)
-        
-        self.add(group, y_tex, f_tex)
