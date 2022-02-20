@@ -82,13 +82,11 @@ class Thumbnail(EpsilonDeltaScene):
         dot = Dot(self.ax.c2p(x0, l), color=BLACK).set_stroke(RED, width=4)
 
         logo = Logo().to_corner(DR)
-        subscribe = Text("Subscribe", font="Arial", weight=BOLD).to_corner(DL)
-        rec2 = SurroundingRectangle(subscribe, color=WHITE, corner_radius=0.2, buff=0.3)
-        rec2.set_fill(PURE_RED, opacity=1)
+        symbol = SVGMobject("symbol.svg").to_corner(DL)
 
         self.add(
             self.ax, graph, delta_lines, epsilon_lines, limit_lines, dot, rec, title,
-            text, logo, rec2, subscribe
+            text, logo, symbol
         )
     
     def func(self, x):
