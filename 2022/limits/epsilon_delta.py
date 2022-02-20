@@ -1,4 +1,5 @@
 from manim import *
+from types import FunctionType
 
 
 MY_GREEN = "#198C15"
@@ -120,7 +121,7 @@ class TeachFunctionScene(Scene):
 
         if x_val == None:
             for i in range(len(steps[0])):
-                if isinstance(steps[0][i], function):
+                if isinstance(steps[0][i], FunctionType):
                     steps[0][i] = self.x_str
             tex = MathTex(self.f_str, "(", self.x_str, ")", "=", *steps[0])
             result.add(tex)
@@ -128,7 +129,7 @@ class TeachFunctionScene(Scene):
         else:
             for i in range(len(steps)):
                 for j in range(len(steps[i])):
-                    if isinstance(steps[i][j], function):
+                    if isinstance(steps[i][j], FunctionType):
                         steps[i][j] = steps[i][j](x_val)
                         if i == 0:
                             steps[i][j] = "("+str(x_val)+")"
