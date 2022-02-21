@@ -254,7 +254,7 @@ class TeachFunctionScene(Scene):
             self.play(FadeOut(arrow))
             self.play(
                 ReplacementTransform(y_f_x[i], y_f_x_general),
-                ReplacementTransform(f_x[i][j+1], f_x[0][0])
+                ReplacementTransform(f_x[i][j+1], f_x_general[0])
             )
             self.wait()
         
