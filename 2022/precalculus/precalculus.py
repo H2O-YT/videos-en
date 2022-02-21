@@ -212,54 +212,51 @@ class TeachFunctionScene(Scene):
     
     def show_function_mapping(self):
 
-        f_x_general = self.get_function_steps_group()
-        f_x = VGroup(*[self.get_function_steps_group(x) for x in self.x_vals])
-        y_f_x_general = self.get_y_tex()
-        y_f_x_general.next_to(f_x, UP)
-        y_f_x = VGroup(*[self.get_y_tex(x) for x in self.x_vals])
-        y_f_x.next_to(f_x, UP)
         in_out_group = self.get_input_output_group()
+        f_x = VGroup(*[self.get_function_steps_group(x) for x in [None, *self.steps]])
+        y_f_x = VGroup(*[self.get_y_tex(x) for x in [None, *self.steps]])
+        y_f_x.next_to(f_x, UP)
 
-        self.play(Write(y_f_x_general))
-        self.play(Write(f_x_general[0]))
-        self.wait(2)
-        self.play(Write(in_out_group[0]))
-        self.wait(2)
+        x_group = in_out_group[0]
+        y_group = in_out_group[1]
+        arrow_group = in_out_group[2]
 
-        for i in range(len(f_x)):
-            self.play(Indicate(in_out_group[0][0][i]))
+        f_x_general = f_x[0][0]
+        y_f_x_general = y_f_x[0]
+
+        self.play(Write(x_group))
+        self.play(Write(y_f_x_general), Write(f_x_general))
+        self.wait()
+
+        x_vals_group = x_group[0]
+        y_vals_group = y_group[0]
+
+        for i in range(len(x_vals_group)):
+
+            self.play(Indicate(x_vals_group[i]))
             self.wait()
-            self.play(
-                ReplacementTransform(y_f_x_general, y_f_x[i]),
-                ReplacementTransform(f_x_general[0], f_x[i][0])
-            )
-            self.wait()
-            for j in range(len(f_x[i])-1):
-                self.play(ReplacementTransform(f_x[i][j], f_x[i][j+1]))
+            y_f_x_general.save_state()
+            f_x_general.save_state()
+            self.play(Transform(y_f_x_general, y_f_x[i+1]))
+
+            for j in range(len(f_x[i])):
+                self.play(Transform(f_x_general, f_x[i][j]))
                 self.wait()
-
-            self.play(Circumscribe(f_x[i][j+1]))
-            self.play(Indicate(y_f_x[i]))
+            
+            self.play(Circumscribe(f_x_general))
+            self.play(Indicate(y_f_x_general))
             self.wait()
-            self.play(Write(in_out_group[1][0][i]))
-            self.wait()
+            self.play(Write(y_vals_group[i]))
             
             arrow = Arrow(
-                in_out_group[0][0][i].get_right()+0.2*RIGHT,
-                in_out_group[1][0][i].get_left()+0.2*LEFT
+                x_vals_group[i].get_right()+0.1*RIGHT, y_vals_group.get_left()+0.1*LEFT
             )
             self.play(Create(arrow))
             self.wait()
-            self.play(FadeOut(arrow))
-            self.play(
-                ReplacementTransform(y_f_x[i], y_f_x_general),
-                ReplacementTransform(f_x[i][j+1], f_x_general[0])
-            )
+            self.play(Uncreate(arrow))
+            self.play(Restore(f_x_general), Restore(y_f_x_general))
             self.wait()
-        
-        self.play(Write(in_out_group[1][1]))
-        self.play(Write(in_out_group[2]))
-        self.wait()
+
 
 
 class Function1(TeachFunctionScene):
