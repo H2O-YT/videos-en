@@ -229,11 +229,10 @@ class TeachFunctionScene(Scene):
         for i in range(len(f_x)):
             self.play(Indicate(in_out_group[0][0][i]))
             self.wait()
-            if i == 0:
-                self.play(
-                    ReplacementTransform(y_f_x_general, y_f_x[i]),
-                    ReplacementTransform(f_x_general[0], f_x[i][0])
-                )
+            self.play(
+                ReplacementTransform(y_f_x_general, y_f_x[i]),
+                ReplacementTransform(f_x_general[0], f_x[i][0])
+            )
             self.wait()
             for j in range(len(f_x[i])-1):
                 self.play(ReplacementTransform(f_x[i][j], f_x[i][j+1]))
