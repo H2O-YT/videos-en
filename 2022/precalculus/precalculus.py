@@ -239,8 +239,8 @@ class TeachFunctionScene(Scene):
             f_x_general.save_state()
             self.play(Transform(y_f_x_general, y_f_x[i+1]))
 
-            for j in range(len(f_x[i])):
-                self.play(Transform(f_x_general, f_x[i][j]))
+            for j in range(len(f_x[i+1])):
+                self.play(Transform(f_x_general, f_x[i+1][j]))
                 self.wait()
             
             self.play(Circumscribe(f_x_general))
@@ -256,6 +256,11 @@ class TeachFunctionScene(Scene):
             self.play(Uncreate(arrow))
             self.play(Restore(f_x_general), Restore(y_f_x_general))
             self.wait()
+        
+        y_set_group = y_group[1]
+        self.play(Write(y_set_group))
+        self.play(Write(arrow_group))
+        self.wait()
 
 
 
