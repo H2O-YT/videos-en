@@ -372,6 +372,7 @@ class VisualizingFunction(Scene):
         for x_val in self.x_vals:
             dot = Dot(x_val*RIGHT).set_color(RED)
             dots.add(dot)
+            self.bring_to_front(rec, group)
             self.play(Create(dot))
         
         y_values = [self.function(x) for x in self.x_vals]
@@ -380,16 +381,32 @@ class VisualizingFunction(Scene):
         for i in range(len(dots)):
             self.play(dots[i].animate.shift(y_values[i]*UP))
         
+        text2 = Tex("Extend ", "$"+self.x_str+"$ ", "to any real value!").to_edge(DOWN)
+        text2.set_color_by_tex("$"+self.x_str+"$", YELLOW)
+        rec2 = SurroundingRectangle(text2).set_fill(BLACK, opacity=1)
+
         self.wait()
-        self.play(Create(graph), FadeOut(dots))
+        self.play(Write(rec2))
+        self.play(Write(text2))
+        self.wait(2)
+        self.play(Unwrite(text2), Unwrite(rec2))
+        self.play(FadeOut(dots))
+        self.bring_to_front(rec, group)
+        self.play(Create(graph))
         self.wait()
-        
+
+
+x_vals = [-3/4, 0, 1/2, 2]
+step1 = ["2", "x", "-", "1"]
+step2 = [lambda x: 2*x, "-", "1"]
+steps = [step1, step2]
+function_str = ["2", "x", "-", "1"]
 
 
 class FunctionIntro1(FunctionIntroduction):
     
     def setup(self):
-        self.setup_function_stuff("x", "y", "f", ["2", "x", "-", "1"])
+        self.setup_function_stuff("x", "y", "f", function_str)
     
     def construct(self):
         super().construct()
@@ -402,10 +419,8 @@ class FunctionIntro1(FunctionIntroduction):
 class Function1(TeachFunctionScene):
 
     def setup(self):
-        x_vals = [-3/4, 0, 1/2, 2]
-        step1 = ["2", "x", "-", "1"]
-        step2 = [lambda x: 2*x, "-", "1"]
-        self.setup_function_stuff(self.func, x_vals, [step1, step2], "x", "y", "f")
+        
+        self.setup_function_stuff(self.func, x_vals, steps, "x", "y", "f")
     
     def func(self, x):
         return 2*x-1
@@ -414,7 +429,7 @@ class Function1(TeachFunctionScene):
 class VisualizeFunction1(VisualizingFunction):
 
     def setup(self):
-        self.setup_function_stuff(self.func, range(-7, 8), None, "x", "y", "f", ["2", "x", "-", "1"])
+        self.setup_function_stuff(self.func, x_vals, None, "x", "y", "f", function_str)
     
     def func(self, x):
         return 2*x-1
