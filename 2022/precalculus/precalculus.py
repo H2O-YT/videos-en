@@ -213,8 +213,8 @@ class TeachFunctionScene(Scene):
     def show_function_mapping(self):
 
         in_out_group = self.get_input_output_group()
-        f_x = VGroup(*[self.get_function_steps_group(x) for x in [None, *self.steps]])
-        y_f_x = VGroup(*[self.get_y_tex(x) for x in [None, *self.steps]])
+        f_x = VGroup(*[self.get_function_steps_group(x) for x in [None, *self.x_vals]])
+        y_f_x = VGroup(*[self.get_y_tex(x) for x in [None, *self.x_vals]])
         y_f_x.next_to(f_x, UP)
 
         x_group = in_out_group[0]
