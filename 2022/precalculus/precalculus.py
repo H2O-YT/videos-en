@@ -270,8 +270,7 @@ class Function1(TeachFunctionScene):
         x_vals = [-3/4, 0.0, 1/2, 2.0]
         step1 = ["2", "x", "-", "1"]
         step2 = [lambda x: 2*x, "-", "1"]
-        steps = [step1, step2]
-        self.setup_function_stuff(self.func, x_vals, steps, "x", "y", "f")
+        self.setup_function_stuff(self.func, x_vals, [step1, step2], "x", "y", "f")
     
     def func(self, x):
         return 2*x-1
