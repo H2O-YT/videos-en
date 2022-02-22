@@ -249,7 +249,7 @@ class TeachFunctionScene(Scene):
             self.play(Write(y_vals_group[i]))
             
             arrow = Arrow(
-                x_vals_group[i].get_right()+0.1*RIGHT, y_vals_group.get_left()+0.1*LEFT
+                x_vals_group[i].get_right()+0.1*RIGHT, y_vals_group[i].get_left()+0.1*LEFT
             )
             self.play(Create(arrow))
             self.wait()
