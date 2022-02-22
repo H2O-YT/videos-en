@@ -105,7 +105,28 @@ class Thumbnail(EpsilonDeltaScene):
         return (x**3 - 1)/(x - 1) - 4
 
 
-
+class FunctionIntroduction(Scene):
+    
+    def setup_function_stuff(self, x_str, y_str, f_str, func_str):
+        self.x_str = x_str
+        self.y_str = y_str
+        self.f_str = f_str
+        self.func_str = func_str
+    
+    def construct(self):
+        title = TexRainbow("Let's see a function").scale(2)
+        y = MathTex(self.y_str, "=", self.f_str, "(", self.x_str, ")").scale(1.5)
+        func = MathTex(self.f_str, "(", self.x_str, ")", "=", *self.func_str).scale(1.5)
+        group = VGroup(title, y, func)
+        for part in group[1:]:
+            part.set_color_by_tex(self.x_str, YELLOW)
+            part.set_color_by_tex(self.y_str, BLUE)
+            part.set_color_by_tex(self.f_str, GREEN)
+        group.arrange(DOWN)
+        self.play(Write(title))
+        self.wait()
+        self.play(Write(group[1:]))
+        self.wait()
 
 
 class TeachFunctionScene(Scene):
@@ -271,6 +292,18 @@ class TeachFunctionScene(Scene):
         self.play(Write(arrow_group))
         self.wait()
 
+
+class FunctionIntro1(FunctionIntroduction):
+    
+    def setup(self):
+        self.setup_function_stuff("x", "y", "f", ["2", "x", "-", "1"])
+    
+    def construct(self):
+        super().construct()
+        text = Tex("But what's a function?").scale(1.5)
+        text.set_color(ORANGE).to_edge(DOWN)
+        self.play(GrowFromCenter(text))
+        self.wait()
 
 
 class Function1(TeachFunctionScene):
