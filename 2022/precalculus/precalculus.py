@@ -359,7 +359,10 @@ class VisualizingFunction(Scene):
         y_specific_group.move_to(x_specific_group)
 
         ax = NumberPlane()
-        graph = ax.plot(self.function, discontinuities=self.discontinuities, color=GREEN)
+        graph = FunctionGraph(
+            self.function, discontinuities=self.discontinuities,
+            color=RED
+        )
 
         self.play(Write(ax))
         self.play(Write(rec))
@@ -372,7 +375,7 @@ class VisualizingFunction(Scene):
         for x_val in self.x_vals:
             dot = Dot(x_val*RIGHT).set_color(RED)
             dots.add(dot)
-            self.bring_to_front(rec, group)
+            self.add(rec, group)
             self.play(Create(dot))
         
         y_values = [self.function(x) for x in self.x_vals]
@@ -381,7 +384,7 @@ class VisualizingFunction(Scene):
         for i in range(len(dots)):
             self.play(dots[i].animate.shift(y_values[i]*UP))
         
-        text2 = Tex("Extend ", "$"+self.x_str+"$ ", "to any real value!").to_edge(DOWN)
+        text2 = Tex("Extend ", "$"+self.x_str+"$ ", "to more real values!").to_edge(DOWN)
         text2.set_color_by_tex("$"+self.x_str+"$", YELLOW)
         rec2 = SurroundingRectangle(text2).set_fill(BLACK, opacity=1)
 
@@ -391,8 +394,8 @@ class VisualizingFunction(Scene):
         self.wait(2)
         self.play(Unwrite(text2), Unwrite(rec2))
         self.play(FadeOut(dots))
-        self.bring_to_front(rec, group)
-        self.play(Create(graph))
+        self.add(rec, group)
+        self.play(Write(graph))
         self.wait()
 
 
