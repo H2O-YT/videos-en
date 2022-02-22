@@ -293,6 +293,93 @@ class TeachFunctionScene(Scene):
         self.wait()
 
 
+class VisualizingFunction(Scene):
+    
+    def setup_function_stuff(self, function, x_vals, discontinuities, x_str, y_str, f_str, function_str):
+        self.function = function
+        self.x_vals = x_vals
+        self.discontinuities = discontinuities
+        self.x_str = x_str
+        self.y_str = y_str
+        self.f_str = f_str
+        self.function_str = function_str
+
+    def construct(self):
+        self.visualize_function()
+    
+    def get_y_general(self):
+        tex = MathTex(self.y_str, "=", self.f_str, "(", self.x_str, ")")
+        tex.set_color_by_tex(self.x_str, YELLOW)
+        tex.set_color_by_tex(self.y_str, BLUE)
+        tex.set_color_by_tex(self.f_str, GREEN)
+        return tex
+    
+    def get_f_general(self):
+        tex = MathTex(self.f_str, "(", self.x_str, ")", "=", *self.function_str)
+        tex.set_color_by_tex(self.x_str, YELLOW)
+        tex.set_color_by_tex(self.f_str, GREEN)
+        return tex
+    
+    def get_x_specific_group(self):
+        result = VGroup()
+        for x_val in self.x_vals:
+            tex = MathTex(self.x_str, "=", x_val)
+            tex.set_color_by_tex(x_val, YELLOW)
+            result.add(tex)
+        result.arrange(DOWN)
+        return result
+    
+    def get_y_specific_group(self):
+        result = VGroup()
+        for x_val in self.x_vals:
+            y_val = self.function(x_val)
+            if y_val - int(y_val) == 0:
+                y_val = int(y_val)
+            tex = MathTex(self.y_str, "=", y_val)
+            tex.set_color_by_tex(self.y_str, BLUE)
+            result.add(tex)
+        result.arrange(DOWN)
+        return result
+    
+    def visualize_function(self):
+
+        f_general = self.get_f_general()
+        y_general = self.get_y_general()
+        x_specific_group = self.get_x_specific_group()
+        y_specific_group = self.get_y_specific_group()
+        group = VGroup(y_general, f_general, x_specific_group)
+        group.arrange(DOWN).to_corner(UL)
+        rec = SurroundingRectangle(group).set_fill(BLACK, opacity=1)
+        y_specific_group.move_to(x_specific_group)
+
+        ax = NumberPlane()
+        graph = ax.plot(self.function, discontinuities=self.discontinuities, color=GREEN)
+
+        self.play(Write(ax))
+        self.play(Write(rec))
+        self.play(Write(group))
+        self.wait()
+        self.play(Indicate(x_specific_group))
+        self.wait()
+        dots = VGroup()
+
+        for x_val in self.x_vals:
+            dot = Dot(x_val*RIGHT).set_color(RED)
+            dots.add(dot)
+            self.play(Create(dot))
+        
+        y_values = [self.function(x) for x in self.x_vals]
+        self.play(ReplacementTransform(x_specific_group, y_specific_group))
+
+        for i in range(len(dots)):
+            self.play(dots[i].animate.shift(y_values[i]*UP))
+        
+        self.wait()
+        self.play(Create(graph), FadeOut(dots))
+        self.wait()
+        
+
+
 class FunctionIntro1(FunctionIntroduction):
     
     def setup(self):
