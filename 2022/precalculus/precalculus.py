@@ -324,7 +324,7 @@ class VisualizingFunction(Scene):
         result = VGroup()
         for x_val in self.x_vals:
             tex = MathTex(self.x_str, "=", x_val)
-            tex.set_color_by_tex(x_val, YELLOW)
+            tex.set_color_by_tex(self.x_str, YELLOW)
             result.add(tex)
         result.arrange(DOWN)
         return result
@@ -342,6 +342,12 @@ class VisualizingFunction(Scene):
         return result
     
     def visualize_function(self):
+
+        text = TexRainbow("Let's visualize it!").scale(2)
+        self.play(Write(text))
+        self.wait(2)
+        self.play(ShrinkToCenter(text))
+        self.wait()
 
         f_general = self.get_f_general()
         y_general = self.get_y_general()
@@ -400,6 +406,15 @@ class Function1(TeachFunctionScene):
         step1 = ["2", "x", "-", "1"]
         step2 = [lambda x: 2*x, "-", "1"]
         self.setup_function_stuff(self.func, x_vals, [step1, step2], "x", "y", "f")
+    
+    def func(self, x):
+        return 2*x-1
+
+
+class VisualizeFunction1(VisualizingFunction):
+
+    def setup(self):
+        self.setup_function_stuff(self.func, range(-7, 8), None, "x", "y", "f", ["2", "x", "-", "1"])
     
     def func(self, x):
         return 2*x-1
