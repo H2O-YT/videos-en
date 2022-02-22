@@ -105,6 +105,9 @@ class Thumbnail(EpsilonDeltaScene):
         return (x**3 - 1)/(x - 1) - 4
 
 
+
+
+
 class TeachFunctionScene(Scene):
 
     def setup_function_stuff(self, function, x_vals, steps, x_str, y_str, f_str):
@@ -132,12 +135,18 @@ class TeachFunctionScene(Scene):
             for i in range(len(steps)):
                 for j in range(len(steps[i])):
                     if isinstance(steps[i][j], FunctionType):
-                        steps[i][j] = steps[i][j](x_val)
+                        val = steps[i][j](x_val)
+                        if val - int(val) == 0:
+                            val = int(val)
+                        steps[i][j] = val
                     if steps[i][j] == self.x_str:
                         steps[i][j] = "("+str(x_val)+")"
                 tex = MathTex(self.f_str, "(", x_val, ")", "=", *steps[i])
                 result.add(tex)
-            tex = MathTex(self.f_str, "(", x_val, ")", "=", self.function(x_val))
+            val = self.function(x_val)
+            if val - int(val) == 0:
+                val = int(val)
+            tex = MathTex(self.f_str, "(", x_val, ")", "=", val)
             result.add(tex)
         
         for part in result:
@@ -267,7 +276,7 @@ class TeachFunctionScene(Scene):
 class Function1(TeachFunctionScene):
 
     def setup(self):
-        x_vals = [-3/4, 0.0, 1/2, 2.0]
+        x_vals = [-3/4, 0, 1/2, 2]
         step1 = ["2", "x", "-", "1"]
         step2 = [lambda x: 2*x, "-", "1"]
         self.setup_function_stuff(self.func, x_vals, [step1, step2], "x", "y", "f")
