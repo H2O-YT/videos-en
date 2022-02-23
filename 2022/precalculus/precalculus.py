@@ -2,6 +2,8 @@ from manim import *
 from types import FunctionType
 from copy import deepcopy
 
+from sqlalchemy import except_
+
 
 MY_GREEN = "#198C15"
 
@@ -193,7 +195,15 @@ class TeachFunctionScene(Scene):
     def get_input_output_group(self):
         
         x_vals = self.x_vals
-        y_vals = [self.function(x) for x in self.x_vals]
+        y_vals = []
+        for x_val in x_vals:
+            try:
+                y_val = self.function(x_val)
+            except:
+                pass
+            finally:
+                y_val = "Impossible"
+            y_vals.append(y_vals)
         x_group = VGroup(VGroup(), VGroup())
         y_group = VGroup(VGroup(), VGroup())
         arrow_group = VGroup()
@@ -203,8 +213,11 @@ class TeachFunctionScene(Scene):
             x_tex = MathTex(self.x_str, "=", x)
             x_tex.set_color_by_tex(self.x_str, YELLOW)
             x_group[0].add(x_tex)
-            y_tex = MathTex(self.y_str, "=", y)
-            y_tex.set_color_by_tex(self.y_str, BLUE)
+            if y_val != "Impossible":
+                y_tex = MathTex(self.y_str, "=", y)
+                y_tex.set_color_by_tex(self.y_str, BLUE)
+            else:
+                y_tex = Tex(y_val).set_color(RED)
             y_group[0].add(y_tex)
         
         x_group[0].arrange(DOWN)
@@ -332,11 +345,19 @@ class VisualizingFunction(Scene):
     def get_y_specific_group(self):
         result = VGroup()
         for x_val in self.x_vals:
-            y_val = self.function(x_val)
-            if y_val - int(y_val) == 0:
-                y_val = int(y_val)
-            tex = MathTex(self.y_str, "=", y_val)
-            tex.set_color_by_tex(self.y_str, BLUE)
+            try:
+                y_val = self.function(x_val)
+            except:
+                pass
+            finally:
+                y_val = "Impossible"
+            if y_val != "Impossible":
+                if y_val - int(y_val) == 0:
+                    y_val = int(y_val)
+                tex = MathTex(self.y_str, "=", y_val)
+                tex.set_color_by_tex(self.y_str, BLUE)
+            else:
+                tex = Tex(y_val)
             result.add(tex)
         result.arrange(DOWN)
         return result
