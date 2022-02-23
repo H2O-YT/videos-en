@@ -403,7 +403,7 @@ x_vals = [-3/4, 0, 1/2, 2]
 step1 = ["2", "x", "-", "1"]
 step2 = [lambda x: 2*x, "-", "1"]
 steps = [step1, step2]
-function_str = ["2", "x", "-", "1"]
+function_str = step1
 
 
 class FunctionIntro1(FunctionIntroduction):
@@ -436,3 +436,34 @@ class VisualizeFunction1(VisualizingFunction):
     
     def func(self, x):
         return 2*x-1
+
+
+function_str2 = ["{", "x", "^3", "\\over", "x", "}"]
+x_vals2 = range(-1, 4)
+steps2 = [function_str2, ["{", lambda x: x**3, "\\over", lambda x: x, "}"]]
+
+
+class FunctionIntro2(FunctionIntroduction):
+
+    def setup(self):
+        self.setup_function_stuff("x", "y", "g", function_str2)
+
+
+class Function2(TeachFunctionScene):
+
+    def setup(self):
+        self.setup_function_stuff(self.func, x_vals2, steps2, "x", "y", "g")
+    
+    def func(self, x):
+        return x**3/x
+
+
+class VisualizeFunction2(VisualizingFunction):
+
+    def setup(self):
+        self.setup_function_stuff(
+            self.func, x_vals2, [0], "x", "y", "g", function_str2
+        )
+    
+    def func(self, x):
+        return x**3/x
