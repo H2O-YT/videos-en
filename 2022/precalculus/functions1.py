@@ -21,8 +21,10 @@ class Thumbnail(Scene):
 
         logo = Logo().to_corner(DR)
         eq = MathTex("y", "=", "x", "^3", "-", "2")
-        eq.scale(2).set_stroke(BLACK, width=20, background=True)
         eq.set_color_by_tex("y", BLUE)
         eq.set_color_by_tex("x", YELLOW)
+        eq.scale(2)
+        eq.set_stroke(BLACK, width=20, background=True)
+        eq.to_corner(DL)
 
         self.add(ax, graph, rec, title, text, logo, eq)
