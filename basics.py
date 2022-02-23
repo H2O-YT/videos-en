@@ -16,3 +16,10 @@ class Logo(VMobject):
             shape = Square().set_stroke(width=0).set_fill(MY_GREEN, opacity=1)
         
         self.add(shape, tex)
+
+
+class TexRainbow(Tex):
+    
+    def __init__(self, *tex_strings, **kwargs):
+        super().__init__(*tex_strings, **kwargs)
+        self.set_color_by_gradient(RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE)
