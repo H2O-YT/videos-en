@@ -19,12 +19,14 @@ class Thumbnail(Scene):
         ax = NumberPlane()
         graph = ax.plot(lambda x: x**3-2, color=RED)
 
-        logo = Logo().to_corner(DR)
+        symbol = SVGMobject("symbol.svg")
+        logo = Logo()
+        VGroup(symbol, logo).arrange(RIGHT).to_corner(DR)
         eq = MathTex("y", "=", "x", "^3", "-", "2")
         eq.set_color_by_tex("y", BLUE)
         eq.set_color_by_tex("x", YELLOW)
         eq.scale(2)
-        eq.set_stroke(BLACK, width=20, background=True)
+        eq.set_stroke(BLACK, width=10, background=True)
         eq.to_corner(DL)
 
-        self.add(ax, graph, rec, title, text, logo, eq)
+        self.add(ax, graph, rec, title, text, logo, symbol, eq)
