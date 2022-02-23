@@ -1,3 +1,0 @@
-file './FunctionIntro2.mp4'
-file './Function2.mp4'
-file './VisualizeFunction2.mp4'
