@@ -2,8 +2,6 @@ from manim import *
 from types import FunctionType
 from copy import deepcopy
 
-from sqlalchemy import except_
-
 
 MY_GREEN = "#198C15"
 
@@ -166,10 +164,18 @@ class TeachFunctionScene(Scene):
                         steps[i][j] = "("+str(x_val)+")"
                 tex = MathTex(self.f_str, "(", x_val, ")", "=", *steps[i])
                 result.add(tex)
-            val = self.function(x_val)
-            if val - int(val) == 0:
-                val = int(val)
-            tex = MathTex(self.f_str, "(", x_val, ")", "=", val)
+            try:
+                val = self.function(x_val)
+            except:
+                pass
+            finally:
+                val = "Impossible"
+            if val != "Impossible":
+                if val - int(val) == 0:
+                    val = int(val)
+                tex = MathTex(self.f_str, "(", x_val, ")", "=", val)
+            else:
+                tex = Tex(val).set_color(RED)
             result.add(tex)
         
         for part in result:
@@ -357,7 +363,7 @@ class VisualizingFunction(Scene):
                 tex = MathTex(self.y_str, "=", y_val)
                 tex.set_color_by_tex(self.y_str, BLUE)
             else:
-                tex = Tex(y_val)
+                tex = Tex(y_val).set_color(RED)
             result.add(tex)
         result.arrange(DOWN)
         return result
@@ -459,7 +465,7 @@ class VisualizeFunction1(VisualizingFunction):
         return 2*x-1
 
 
-function_str2 = ["{", "x", "^3", "\\over", "x", "}"]
+function_str2 = ["{", "x", "^3", "\\over", "x", "}", ".."]
 x_vals2 = range(-1, 4)
 steps2 = [function_str2, ["{", lambda x: x**3, "\\over", lambda x: x, "}"]]
 

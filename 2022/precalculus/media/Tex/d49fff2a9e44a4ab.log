@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=latex 2022.2.23)  23 FEB 2022 03:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=latex 2022.2.23)  23 FEB 2022 03:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**media/Tex/005034ade1f2eeed.tex
-(./media/Tex/005034ade1f2eeed.tex
+**media/Tex/d49fff2a9e44a4ab.tex
+(./media/Tex/d49fff2a9e44a4ab.tex
 LaTeX2e <2017-04-15>
 Babel <3.18> and hyphenation patterns for 7 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/standalone/standalone.cls
@@ -1838,8 +1838,8 @@ Package microtype Info: Loading configuration file microtype.cfg.
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype.cfg
 File: microtype.cfg 2018/01/14 v2.7a microtype main configuration file (RS)
 ))
-No file 005034ade1f2eeed.aux.
-\openout1 = `005034ade1f2eeed.aux'.
+No file d49fff2a9e44a4ab.aux.
+\openout1 = `d49fff2a9e44a4ab.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
 LaTeX Font Info:    ... okay on input line 24.
@@ -1929,7 +1929,7 @@ LaTeX Font Info:    Try loading font information for U+wasy on input line 26.
 File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
 )
 Preview: Tightpage 0 0 0 0
-[1] (media/Tex/005034ade1f2eeed.aux) ) 
+[1] (media/Tex/d49fff2a9e44a4ab.aux) ) 
 Here is how much of TeX's memory you used:
  15511 strings out of 494848
  272927 string characters out of 6179106
@@ -1939,4 +1939,4 @@ Here is how much of TeX's memory you used:
  59 hyphenation exceptions out of 8191
  39i,9n,56p,10421b,275s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on media/Tex/005034ade1f2eeed.dvi (1 page, 1624 bytes).
+Output written on media/Tex/d49fff2a9e44a4ab.dvi (1 page, 1616 bytes).
