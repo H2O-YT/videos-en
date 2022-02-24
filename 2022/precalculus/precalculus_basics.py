@@ -146,5 +146,13 @@ class FunctionMapping(Scene):
 
             result.add(group)
         
-        for item in result:
-            if isi
+        for i in range(len(result)):
+            if i == 0:
+                result[i].set_color_by_tex(self.x_str, YELLOW)
+                result[i].set_color_by_tex(self.y_str, BLUE)
+                result[i].set_color_by_tex(self.f_str, GREEN)
+            else:
+                for tex in result[i]:
+                    tex.set_color_by_tex(self.f_str, GREEN)
+        
+        return result
