@@ -107,3 +107,23 @@ class FunctionMapping(Scene):
     def get_f_steps_group(self):
 
         result = VGroup()
+
+        func_str = deepcopy(self.func_str)
+
+        for i in range(len(func_str)):
+            if isinstance(func_str[i], FunctionType):
+                func_str[i] = func_str[i](self.x_str)
+
+        tex = MathTex(self.f_str, "(", self.x_str, ")", "=", *func_str)
+        result.add(tex)
+
+        for x_val, y_val in zip(self.x_vals, self.y_vals):
+
+            func_str = deepcopy(self.func_str)
+
+            for i in range(len(func_str)):
+                if isinstance(func_str[i], FunctionType):
+                    func_str[i] = func_str[i](x_val)
+
+            tex = MathTex(self.f_str, "(", self.x_str, ")", "=", *func_str)
+            
