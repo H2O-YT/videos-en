@@ -135,6 +135,16 @@ class FunctionMapping(Scene):
                 for i in range(len(step)):
                     if isinstance(step[i], FunctionType):
                         step[i] = step[i](x_val)
-                        if isinstance(step[i], float):
-                            if step[i] - int(step[i]) == 0:
-                                step[i] = int(step[i])
+                tex = MathTex(self.f_str, "(", x_val, ")", "=", *step)
+                group.add(tex)
+            
+            if y_val != "Impossible":
+                tex = MathTex(self.f_str, "(", x_val, ")", "=", y_val)
+            else:
+                tex = Tex("Impossible").set_color(RED)
+            group.add(tex)
+
+            result.add(group)
+        
+        for item in result:
+            if isi

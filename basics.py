@@ -3,6 +3,11 @@ from manim import *
 
 MY_GREEN = "#198214"
 
+def check_and_convert_to_int(x):
+    if x - int(x) == 0:
+        x = int(x)
+    return x
+
 
 class Logo(VMobject):
 
