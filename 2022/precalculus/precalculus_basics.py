@@ -139,7 +139,7 @@ class FunctionMapping(Scene):
                 group.add(tex)
             
             if y_val != "Impossible":
-                tex = MathTex(self.f_str, "(", x_val, ")", "=", y_val)
+                tex = MathTex(self.f_str, "(", x_val, ")", "=", check_and_convert_to_int(y_val))
             else:
                 tex = Tex("Impossible").set_color(RED)
             group.add(tex)
@@ -160,3 +160,10 @@ class FunctionMapping(Scene):
     def get_mapping_group(self):
 
         result = VGroup()
+
+        x_group = VGroup()
+        x_vals_group = VGroup()
+
+        for x_val in self.x_vals:
+
+            tex = MathTex(self.x_str, "=", x_val)
