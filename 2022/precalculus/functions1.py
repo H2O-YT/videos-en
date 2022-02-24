@@ -30,3 +30,26 @@ class Thumbnail(Scene):
         eq.to_corner(DL)
 
         self.add(ax, graph, rec, title, text, logo, symbol, eq)
+
+
+x_str = "x"
+y_str = "y"
+f_str = "f"
+func_str = ["2", (lambda x: x if isinstance(x, str) else "("+str(x)+")"), "-", "1"]
+
+
+class FunctionIntro1(FunctionIntro):
+
+    def setup(self):
+        self.setup_function_stuff(x_str, y_str, f_str, func_str)
+    
+    def construct(self):
+
+        super().construct()
+        text = Tex("But what's a function?")
+        text.set_color(ORANGE)
+        text.scale(1.5)
+        text.to_edge(DOWN)
+
+        self.play(FadeIn(text, shift=UP))
+        self.wait(2)
