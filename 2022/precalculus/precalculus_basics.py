@@ -119,6 +119,7 @@ class FunctionMapping(Scene):
 
         for x_val, y_val in zip(self.x_vals, self.y_vals):
 
+            group = VGroup()
             func_str = deepcopy(self.func_str)
 
             for i in range(len(func_str)):
@@ -126,4 +127,14 @@ class FunctionMapping(Scene):
                     func_str[i] = func_str[i](x_val)
 
             tex = MathTex(self.f_str, "(", self.x_str, ")", "=", *func_str)
+            group.add(tex)
+
+            steps = deepcopy(self.steps)
             
+            for step in steps:
+                for i in range(len(step)):
+                    if isinstance(step[i], FunctionType):
+                        step[i] = step[i](x_val)
+                        if isinstance(step[i], float):
+                            if step[i] - int(step[i]) == 0:
+                                step[i] = int(step[i])
