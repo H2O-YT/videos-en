@@ -141,7 +141,7 @@ class FunctionMapping(Scene):
             if y_val != "Impossible":
                 tex = MathTex(self.f_str, "(", x_val, ")", "=", check_and_convert_to_int(y_val))
             else:
-                tex = Tex("Impossible").set_color(RED)
+                tex = Tex(y_val).set_color(RED)
             group.add(tex)
 
             result.add(group)
@@ -165,5 +165,54 @@ class FunctionMapping(Scene):
         x_vals_group = VGroup()
 
         for x_val in self.x_vals:
-
             tex = MathTex(self.x_str, "=", x_val)
+            x_vals_group.add(tex)
+
+        x_vals_group.arrange(DOWN)
+        x_group.add(x_vals_group)
+
+        y_group = VGroup()
+        y_vals_group = VGroup()
+
+        for y_val in self.y_vals:
+            if y_val != "Impossible":
+                tex = MathTex(self.y_str, "=", y_val)
+            else:
+                tex = Tex(y_val).set_color(RED)
+            y_vals_group.add(y_group)
+
+        y_vals_group.arrange(DOWN)
+        y_group.add(y_vals_group)
+
+        total_groups = VGroup(x_group, y_group)
+        group = VGroup(x_vals_group, y_vals_group).arrange(RIGHT, buff=4)
+        colors = [YELLOW, BLUE]
+        strings = ["A", "B"]
+
+        for total_group, vals_group, color, string in zip(total_groups, group, colors, strings):
+
+            for tex in vals_group:
+                tex.set_color_by_tex(self.x_str, YELLOW)
+                tex.set_color_by_tex(self.y_str, BLUE)
+
+            shape_group = VGroup()
+            
+            ellipse = Ellipse(width = vals_group.width+1, height=vals_group.height+1)
+            ellipse.set_color(color)
+            ellipse.surround(vals_group)
+            tex = MathTex(string).set_color(color).next_to(ellipse, UP)
+            shape_group.add(ellipse, tex)
+
+            total_group.add(shape_group)
+        
+        arrow_group = VGroup()
+        set1 = x_group[1][1]
+        set2 = y_group[1][1]
+        arrow = CurvedArrow(
+            set1.get_top()+0.1*UP, set2.get_top()+0.1*UP, angle=-90*DEGREES
+        ).set_color(PURPLE)
+        tex = MathTex(self.f_str).set_color(GREEN).next_to(arrow, UP)
+        arrow_group.add(arrow, tex)
+        result.add(x_group, y_group, arrow_group)
+
+        return result
