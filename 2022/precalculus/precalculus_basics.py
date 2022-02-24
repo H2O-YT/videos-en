@@ -8,6 +8,7 @@ sys.path.insert(0, path_folder)
 
 from basics import *
 from copy import deepcopy
+from types import FunctionType
 
 
 class PrecalculusIntro(Scene):
@@ -46,7 +47,11 @@ class FunctionIntro(Scene):
         
         text = TexRainbow("Let's see a function!").scale(2)
         y_tex = MathTex(self.y_str, "=", self.f_str, "(", self.x_str, ")").scale(1.5)
-        f_tex = MathTex(self.f_str, "(", self.x_str, ")", "=", *self.func_str).scale(1.5)
+        func_str = deepcopy(self.func_str)
+        for part in func_str:
+            if isinstance(part, FunctionType):
+                part = part(self.x_str)
+        f_tex = MathTex(self.f_str, "(", self.x_str, ")", "=", *func_str).scale(1.5)
         group = VGroup(text, y_tex, f_tex).arrange(DOWN)
         
         for tex in group[1:]:
@@ -82,15 +87,15 @@ class FunctionMapping(Scene):
         pass
 
     def get_y_group(self):
-        
+
         result = VGroup()
 
-        y_tex = MathTex(self.y_str, "=", self.f_str, "(", self.x_str, ")")
-        result.add(y_tex)
-        
+        tex = MathTex(self.y_str, "=", self.f_str, "(", self.x_str, ")")
+        result.add(tex)
+
         for x_val in self.x_vals:
-            y_tex = MathTex(self.y_str, "=", self.f_str, "(", x_val, ")")
-            result.add(y_tex)
+            tex = MathTex(self.y_str, "=", self.f_str, "(", x_val, ")")
+            result.add(tex)
         
         for tex in result:
             tex.set_color_by_tex(self.x_str, YELLOW)
@@ -102,20 +107,3 @@ class FunctionMapping(Scene):
     def get_f_steps_group(self):
 
         result = VGroup()
-
-        f_tex = MathTex(self.f_str, "(", self.x_str, ")", "=", *self.func_str)
-        result.add(f_tex)
-
-        for x_val, y_val in zip(self.x_vals, self.y_vals):
-
-            group = VGroup()
-            
-            func_str = deepcopy(self.func_str)
-
-            for string in func_str:
-                if self.x_str in string:
-                    string.replace(self.x_str, "("+str(x_val)+")")
-
-            tex = MathTex(self.f_str, "(", x_val, ")", "=", *func_str)
-            group.add(tex)
-            
