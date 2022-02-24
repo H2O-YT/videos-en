@@ -35,7 +35,7 @@ class Thumbnail(Scene):
 x_str = "x"
 y_str = "y"
 f_str = "f"
-func_str = ["2", (lambda x: x if isinstance(x, str) else "("+str(x)+")"), "-", "1"]
+func_str = ["2", lambda x: x if isinstance(x, str) else "("+str(x)+")", "-", "1"]
 
 
 class FunctionIntro1(FunctionIntro):

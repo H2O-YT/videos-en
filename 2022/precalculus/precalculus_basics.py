@@ -48,9 +48,9 @@ class FunctionIntro(Scene):
         text = TexRainbow("Let's see a function!").scale(2)
         y_tex = MathTex(self.y_str, "=", self.f_str, "(", self.x_str, ")").scale(1.5)
         func_str = deepcopy(self.func_str)
-        for part in func_str:
-            if isinstance(part, FunctionType):
-                part = part(self.x_str)
+        for i in range(len(func_str)):
+            if isinstance(func_str[i], FunctionType):
+                func_str[i] = func_str[i](self.x_str)
         f_tex = MathTex(self.f_str, "(", self.x_str, ")", "=", *func_str).scale(1.5)
         group = VGroup(text, y_tex, f_tex).arrange(DOWN)
         
