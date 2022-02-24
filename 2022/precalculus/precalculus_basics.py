@@ -156,3 +156,7 @@ class FunctionMapping(Scene):
                     tex.set_color_by_tex(self.f_str, GREEN)
         
         return result
+    
+    def get_mapping_group(self):
+
+        result = VGroup()
