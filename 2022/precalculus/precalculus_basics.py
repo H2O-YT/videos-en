@@ -93,7 +93,7 @@ class FunctionMapping(Scene):
         result.add(tex)
 
         for x_val in self.x_vals:
-            tex = MathTex(self.y_str, "=", self.f_str, "(", x_val, ")")
+            tex = MathTex(self.y_str, "=", self.f_str, "(", get_number_tex(x_val), ")")
             result.add(tex)
         
         for tex in result:
@@ -120,21 +120,12 @@ class FunctionMapping(Scene):
 
             group = VGroup()
             func_str = deepcopy(self.func_str)
-            
-            x_val_decimals = len(str(x_val).split(".")[1])
-
-            if x_val_decimals <= 3:
-                x_val_rounded = check_and_convert_to_int(np.round(x_val, decimals=x_val_decimals))
-
-            else:
-                x_val_rounded = check_and_convert_to_int(np.round(x_val, decimals=3))
-                x_val_rounded = str(x_val_rounded)+"\\ldots"
 
             for i in range(len(func_str)):
                 if isinstance(func_str[i], FunctionType):
-                    func_str[i] = func_str[i](x_val_rounded)
+                    func_str[i] = func_str[i](x_val)
 
-            tex = MathTex(self.f_str, "(", x_val_rounded, ")", "=", *func_str)
+            tex = MathTex(self.f_str, "(", get_number_tex(x_val), ")", "=", *func_str)
             group.add(tex)
 
             if self.steps != None:
@@ -145,24 +136,11 @@ class FunctionMapping(Scene):
                     for i in range(len(step)):
                         if isinstance(step[i], FunctionType):
                             step[i] = step[i](x_val)
-                            step_part_decimals = len(str(step[i]).split(".")[1])
-                            if step_part_decimals <= 3:
-                                step[i] = check_and_convert_to_int(np.round(step[i], decimals=step_part_decimals))
-                            else:
-                                step[i] = check_and_convert_to_int(np.round(step[i], decimals=3))
-                                step[i] = str(x_val_rounded)+"\\ldots"
-                    tex = MathTex(self.f_str, "(", x_val_rounded, ")", "=", *step)
+                    tex = MathTex(self.f_str, "(", get_number_tex(x_val), ")", "=", *step)
                     group.add(tex)
 
             if y_val != "Impossible":
-                y_val_decimals = len(str(y_val).split(".")[1])
-                if step_part_decimals <= 3:
-                    y_val_rounded = check_and_convert_to_int(np.round(y_val, decimals=y_val_decimals))
-                else:
-                    y_val_rounded = check_and_convert_to_int(np.round(y_val, decimals=3))
-                    y_val_rounded = str(y_val_rounded)+"\\ldots"
-
-                tex = MathTex(self.f_str, "(", x_val_rounded, ")", "=", y_val_rounded)
+                tex = MathTex(self.f_str, "(", get_number_tex(x_val), ")", "=", get_number_tex(y_val))
             else:
                 tex = Tex(y_val).set_color(RED)
             group.add(tex)
@@ -188,14 +166,7 @@ class FunctionMapping(Scene):
         x_vals_group = VGroup()
 
         for x_val in self.x_vals:
-            x_val_decimals = len(str(x_val).split(".")[1])
-            if x_val_decimals <= 3:
-                x_val_rounded = check_and_convert_to_int(np.round(x_val, decimals=x_val_decimals))
-            else:
-                x_val_rounded = check_and_convert_to_int(np.round(x_val, decimals=3))
-                x_val_rounded = str(x_val_rounded)+"\\ldots"
-
-            tex = MathTex(self.x_str, "=", x_val_rounded)
+            tex = MathTex(self.x_str, "=", get_number_tex(x_val))
             x_vals_group.add(tex)
 
         x_vals_group.arrange(DOWN)
@@ -206,13 +177,7 @@ class FunctionMapping(Scene):
 
         for y_val in self.y_vals:
             if y_val != "Impossible":
-                y_val_decimals = len(str(x_val).split(".")[1])
-                if y_val_decimals <= 3:
-                    y_val_rounded = check_and_convert_to_int(np.round(y_val, decimals=y_val_decimals))
-                else:
-                    y_val_rounded = check_and_convert_to_int(np.round(y_val, decimals=3))
-                    y_val_rounded = str(y_val_rounded)+"\\ldots"
-                tex = MathTex(self.y_str, "=", y_val_rounded)
+                tex = MathTex(self.y_str, "=", get_number_tex(y_val))
             else:
                 tex = Tex(y_val).set_color(RED)
             y_vals_group.add(tex)
@@ -221,7 +186,7 @@ class FunctionMapping(Scene):
         y_group.add(y_vals_group)
 
         total_groups = VGroup(x_group, y_group)
-        group = VGroup(x_vals_group, y_vals_group).arrange(RIGHT, buff=2)
+        group = VGroup(x_vals_group, y_vals_group).arrange(RIGHT, buff=4)
         colors = [YELLOW, BLUE]
         strings = ["A", "B"]
 
@@ -250,6 +215,9 @@ class FunctionMapping(Scene):
         tex = MathTex(self.f_str).set_color(GREEN).next_to(arrow, UP)
         arrow_group.add(arrow, tex)
         result.add(x_group, y_group, arrow_group)
+
+        if len(self.x_vals) > 4:
+            result.scale(0.8)
 
         return result
     
@@ -369,7 +337,7 @@ class VisualizeFunction(Scene):
         result = VGroup()
 
         for x_val in self.x_vals:
-            tex = MathTex(self.x_str, "=", x_val)
+            tex = MathTex(self.x_str, "=", get_number_tex(x_val))
             tex.set_color_by_tex(self.x_str, YELLOW)
             result.add(tex)
         
@@ -383,7 +351,7 @@ class VisualizeFunction(Scene):
 
         for y_val in self.y_vals:
             if y_val != "Impossible":
-                tex = MathTex(self.y_str, "=", y_val)
+                tex = MathTex(self.y_str, "=", get_number_tex(y_val))
                 tex.set_color_by_tex(self.y_str, BLUE)
                 result.add(tex)
             else:
@@ -409,7 +377,22 @@ class VisualizeFunction(Scene):
             graph = FunctionGraph(self.func, color=ORANGE)
         else:
             discontinuities = set([discontinuity[0] for discontinuity in self.discontinuities])
-            graph = FunctionGraph(self.func, color=ORANGE, discontinuities=discontinuities)
+            discontinuities = list(discontinuities)
+            frame_x_radius = config.frame_x_radius
+            graph = VGroup()
+            for i in range(len(self.discontinuities)):
+                if i == 0:
+                    x_range = [-frame_x_radius, self.discontinuities[i][0]-0.1]
+                    graph_part = FunctionGraph(self.func, color=ORANGE, x_range=x_range)
+                    graph.add(graph_part)
+                else:
+                    x_range = [self.discontinuities[i-1]+0.1, self.discontinuities[i][0]-0.1]
+                    graph_part = FunctionGraph(self.func, color=ORANGE, x_range=x_range)
+                    graph.add(graph_part)
+            if self.discontinuities[i][0] < frame_x_radius-0.1:
+                x_range = [self.discontinuities[i][0]+0.1, frame_x_radius]
+                graph_part = FunctionGraph(self.func, color=ORANGE, x_range=x_range)
+                graph.add(graph_part)
 
         general_group = self.get_general_group()
         x_vals = self.get_x_vals()
@@ -473,17 +456,18 @@ class VisualizeFunction(Scene):
                             defined_points.add(dot)
                         self.play(Create(dot))
                 except:
-                    if discontinuities[1] != None:
+                    if discontinuity[1] != None:
                         dot = Dot(discontinuity).set_fill(BLACK, opacity=1).set_stroke(ORANGE, width=4)
                         nondefined_points.add(dot)
                         self.play(Create(dot))
 
-            self.wait()
-            dot = nondefined_points[0].copy()
-            tex = Tex("means the graph doesn't include that point")
-            aclaration = VGroup(dot, tex).arrange(RIGHT).to_edge(DOWN)
-            rec = always_redraw(lambda: SurroundingRectangle(aclaration).set_fill(BLACK, opacity=1))
-            self.play(Write(rec), Write(aclaration))
+            if len(nondefined_points) > 0:
+                self.wait()
+                dot = nondefined_points[0].copy()
+                tex = Tex("means the graph doesn't include that point")
+                aclaration = VGroup(dot, tex).arrange(RIGHT).to_edge(DOWN)
+                rec = always_redraw(lambda: SurroundingRectangle(aclaration).set_fill(BLACK, opacity=1))
+                self.play(Write(rec), Write(aclaration))
 
             if len(defined_points) > 0:
                 self.wait(2)

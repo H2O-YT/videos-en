@@ -35,9 +35,9 @@ class Thumbnail(Scene):
 x_str = "x"
 y_str = "y"
 f_str = "f"
-func_str = ["2", lambda x: x if isinstance(x, str) else "("+str(x)+")", "-", "1"]
+func_str = ["2", lambda x: get_number_tex(x, parentheses=True), "-", "1"]
 x_vals = [-0.75, 0, 0.5, 1]
-steps = [[lambda x: check_and_convert_to_int(2*x), "-", "1"]]
+steps = [[lambda x: get_number_tex(2*x), "-", "1"]]
 discontinuities = None
 
 def func(x):
@@ -80,19 +80,19 @@ class VisualizeFunction1(VisualizeFunction):
 
 
 def get_string1(x):
-    return x
+    return get_number_tex(x)
 
 def get_string2(x):
     if x-1 >= 0:
-        return "{"+str(x-1)+"^"
+        return "{"+get_number_tex(x-1)+"^"
     else:
-        return "{("+str(x-1)+")^"
+        return "{"+get_number_tex(x-1, parentheses=True)+"^"
 
 def get_string3(x):
-    return str(x-1)+"}"
+    return get_number_tex(x-1)+"}"
 
 def get_string4(x):
-    return "{"+str((x-1)**3)
+    return "{"+get_number_tex((x-1)**3)
 
 x_str2 = "x"
 y_str2 = "y"
@@ -132,13 +132,13 @@ class VisualizeFunction2(VisualizeFunction):
         return func2(x)
 
 
-x_str3 = "t"
+x_str3 = "t\\relax"
 y_str3 = "y"
 f_str3 = "h"
-func_str3 = ["{1", "\\over", lambda x: x+"}" if isinstance(x, str) else str(x)+"}"]
+func_str3 = ["{1", "\\over", lambda x: get_number_tex(x)+"}"]
 x_vals3 = [-3, -0.5, 0, 0.5, 3]
 steps3 = None
-discontinuities3 = [np.array([0, None], dtype=float or NoneType)]
+discontinuities3 = [[0, None]]
 
 def func3(x):
     return 1/x
@@ -166,3 +166,60 @@ class VisualizeFunction3(VisualizeFunction):
     
     def func(self, x):
         return func3(x)
+
+
+class FunctionDefinition(Scene):
+
+    def construct(self):
+        self.show_definition()
+    
+    def show_definition(self):
+
+        title = TexRainbow("Definition").scale(2).to_edge(UP)
+        definition1p1 = Tex("A ", "function")
+        definition1p2 = MathTex("f").set_color(GREEN)
+        definition1p3 = Tex("is ", "a ", "rule ", "that")
+        definition1 = VGroup(definition1p1, definition1p2, definition1p3).arrange(RIGHT)
+        definition2p1 = Tex("assigns ", "to ", "each ", "element")
+        definition2p2 = MathTex("x", " \\in", "A")
+        definition2p2.set_color_by_tex("x", YELLOW)
+        definition2p2.set_color_by_tex("A", YELLOW)
+        definition2 = VGroup(definition2p1, definition2p2).arrange(RIGHT)
+        definition3p1 = Tex("an ", "\\textbf{unique} ", "element")
+        definition3p2 = MathTex("y", "\\in", "B")
+        definition3p2.set_color_by_tex("y", BLUE)
+        definition3p2.set_color_by_tex("B", BLUE)
+        definition3 = VGroup(definition3p1, definition3p2).arrange(RIGHT)
+        definition = VGroup(definition1, definition2, definition3).arrange(DOWN).scale(2)
+
+        aclaration1 = MathTex("y", "=", "f", "(", "x", ")")
+        aclaration1.set_color_by_tex("y", BLUE)
+        aclaration1.set_color_by_tex("f", GREEN)
+        aclaration1.set_color_by_tex("x", YELLOW)
+        aclaration2 = Tex("means")
+        aclaration3 = MathTex("x").set_color(BLUE)
+        aclaration4 = Tex("corresponds ", "to")
+        aclaration5 = MathTex("y").set_color(YELLOW)
+        aclaration6 = Tex("in")
+        aclaration7 = MathTex("f").set_color(GREEN)
+        aclaration = VGroup(aclaration1, aclaration2, aclaration3, aclaration4, aclaration5, aclaration6, aclaration7)
+        aclaration.arrange(RIGHT).scale(1.5).to_edge(DOWN)
+
+        self.play(GrowFromCenter(title))
+        for part in definition:
+            for group in part:
+                if isinstance(group, Tex):
+                    for tex_part in group:
+                        self.add(tex_part)
+                        self.wait(0.5)
+                else:
+                    self.add(group)
+                    self.wait(0.5)
+        for part in aclaration:
+            if isinstance(part, Tex):
+                for tex_part in part:
+                    self.add(tex_part)
+                    self.wait(0.5)
+            else:
+                self.add(part)
+                self.wait(0.5)

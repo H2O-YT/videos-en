@@ -1,6 +1,6 @@
 # This file is used internally by FFMPEG.
-file 'file:C:/Users/benja/OneDrive/Documentos/videos-en/2022/precalculus/media/videos/functions1/1080p60/partial_movie_files/FunctionIntro1/2724823860_3460608759_805493321.mp4'
-file 'file:C:/Users/benja/OneDrive/Documentos/videos-en/2022/precalculus/media/videos/functions1/1080p60/partial_movie_files/FunctionIntro1/1164547788_1804113928_1565315622.mp4'
-file 'file:C:/Users/benja/OneDrive/Documentos/videos-en/2022/precalculus/media/videos/functions1/1080p60/partial_movie_files/FunctionIntro1/1164547788_398514950_3715183155.mp4'
-file 'file:C:/Users/benja/OneDrive/Documentos/videos-en/2022/precalculus/media/videos/functions1/1080p60/partial_movie_files/FunctionIntro1/1164547788_1548335196_3209677390.mp4'
-file 'file:C:/Users/benja/OneDrive/Documentos/videos-en/2022/precalculus/media/videos/functions1/1080p60/partial_movie_files/FunctionIntro1/1164547788_398514950_1486373936.mp4'
+file 'file:C:/Users/benja/OneDrive/Documentos/videos-en/2022/precalculus/media/videos/functions1/1080p60/partial_movie_files/FunctionIntro1/2724823860_3251447275_805493321.mp4'
+file 'file:C:/Users/benja/OneDrive/Documentos/videos-en/2022/precalculus/media/videos/functions1/1080p60/partial_movie_files/FunctionIntro1/1164547788_1845774951_2582493804.mp4'
+file 'file:C:/Users/benja/OneDrive/Documentos/videos-en/2022/precalculus/media/videos/functions1/1080p60/partial_movie_files/FunctionIntro1/1164547788_398514950_80929615.mp4'
+file 'file:C:/Users/benja/OneDrive/Documentos/videos-en/2022/precalculus/media/videos/functions1/1080p60/partial_movie_files/FunctionIntro1/1164547788_1773509044_3349082800.mp4'
+file 'file:C:/Users/benja/OneDrive/Documentos/videos-en/2022/precalculus/media/videos/functions1/1080p60/partial_movie_files/FunctionIntro1/1164547788_398514950_3366938809.mp4'
